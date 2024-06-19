@@ -1,0 +1,2473 @@
+{
+    "name": "✅ Populate Affiliate dropdown from database",
+    "flow": [
+        {
+            "id": 1,
+            "module": "monday:watchEventsInstant",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 431914
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 1350
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "Populate Affiliate dropdown from database"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:monday",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "monday:GetItem",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 784295
+            },
+            "filter": {
+                "name": "",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{1.event.value.label.text}}",
+                            "o": "exist"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "id": "{{1.event.pulseId}}",
+                "boardId": "",
+                "showSubitems": true,
+                "showParentItem": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 1350
+                },
+                "restore": {
+                    "expect": {
+                        "boardId": {
+                            "label": "Empty"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "Monday Unidos admin Connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentItem",
+                        "type": "boolean",
+                        "label": "Show Parent Item",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitems",
+                        "type": "boolean",
+                        "label": "Show Subitems",
+                        "required": true
+                    },
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID (NOT MANDATORY)"
+                    },
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentItem",
+                        "type": "boolean",
+                        "label": "Show Parent Item",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitems",
+                        "type": "boolean",
+                        "label": "Show Subitems",
+                        "required": true
+                    },
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID (NOT MANDATORY)"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "created_at",
+                        "type": "date",
+                        "label": "Created at"
+                    },
+                    {
+                        "name": "updated_at",
+                        "type": "date",
+                        "label": "Updated at"
+                    },
+                    {
+                        "name": "state",
+                        "type": "text",
+                        "label": "State"
+                    },
+                    {
+                        "name": "board",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Board"
+                    },
+                    {
+                        "name": "creator_id",
+                        "type": "uinteger",
+                        "label": "Creator ID"
+                    },
+                    {
+                        "name": "group",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "deleted",
+                                "type": "boolean",
+                                "label": "Deleted"
+                            },
+                            {
+                                "name": "archived",
+                                "type": "boolean",
+                                "label": "Archived"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Group"
+                    },
+                    {
+                        "name": "column_values",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "title",
+                                "type": "text",
+                                "label": "Title"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            },
+                            {
+                                "name": "additional_info",
+                                "type": "text",
+                                "label": "Additional Info"
+                            },
+                            {
+                                "name": "text",
+                                "type": "text",
+                                "label": "Text"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values"
+                    },
+                    {
+                        "name": "mappable_column_values",
+                        "spec": [],
+                        "type": "collection",
+                        "label": "Mappable column values"
+                    },
+                    {
+                        "name": "assets",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "public_url",
+                                "type": "url",
+                                "label": "Public URL"
+                            },
+                            {
+                                "name": "url",
+                                "type": "url",
+                                "label": "URL"
+                            },
+                            {
+                                "name": "file_extension",
+                                "type": "text",
+                                "label": "File Extension"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Assets"
+                    },
+                    {
+                        "name": "parent_item",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Parent Item"
+                    },
+                    {
+                        "name": "subitems",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "created_at",
+                                "type": "date",
+                                "label": "Created at"
+                            },
+                            {
+                                "name": "updated_at",
+                                "type": "date",
+                                "label": "Updated at"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "board",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Board"
+                            },
+                            {
+                                "name": "creator_id",
+                                "type": "uinteger",
+                                "label": "Creator ID"
+                            },
+                            {
+                                "name": "group",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Group"
+                            },
+                            {
+                                "name": "column_values",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text",
+                                        "label": "ID"
+                                    },
+                                    {
+                                        "name": "title",
+                                        "type": "text",
+                                        "label": "Title"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "additional_info",
+                                        "type": "text",
+                                        "label": "Additional Info"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "array",
+                                "label": "Column Values"
+                            },
+                            {
+                                "name": "mappable_column_values",
+                                "spec": [],
+                                "type": "collection",
+                                "label": "Mappable column values"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Subitems"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 8,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 1350
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 3,
+                            "module": "monday:CreateItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "name": "test1",
+                                "boardId": "4008740550",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "dropdown4",
+                                        "columnValue": {
+                                            "labels": [
+                                                "{{2.name}}"
+                                            ],
+                                            "settings": "{\"hide_footer\":false,\"labels\":[{\"id\":1,\"name\":\"New option\"}]}",
+                                            "selectType": "label2id"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 600
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Contact Directory  ::  public"
+                                        },
+                                        "groupId": {
+                                            "mode": "chose"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Organization"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "labels": {
+                                                                "mode": "chose",
+                                                                "items": [
+                                                                    {
+                                                                        "value": {
+                                                                            "mode": "edit"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values to change"
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 6,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1200,
+                                            "y": 300
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": 4,
+                            "module": "util:FunctionSleep",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "duration": "10"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 0
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "duration",
+                                        "type": "uinteger",
+                                        "label": "Delay",
+                                        "required": true,
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 5,
+                            "module": "monday:DeleteItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "id": "{{3.id}}",
+                                "isToArchiveItem": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 7,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1800,
+                                            "y": 0
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 9,
+                            "module": "monday:CreateItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "name": "test1",
+                                "boardId": "3999273555",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "affiliate",
+                                        "columnValue": {
+                                            "labels": [
+                                                "{{2.name}}"
+                                            ],
+                                            "settings": "{\"hide_footer\":false,\"labels\":[{\"id\":1,\"name\":\"New option\"}]}",
+                                            "selectType": "label2id"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 900
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "💰Invoicing | TEMPLATE  ::  public"
+                                        },
+                                        "groupId": {
+                                            "mode": "chose"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Organization Name"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "labels": {
+                                                                "mode": "chose",
+                                                                "items": [
+                                                                    {
+                                                                        "value": {
+                                                                            "mode": "edit"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values to change"
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 10,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1200,
+                                            "y": 900
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": 11,
+                            "module": "util:FunctionSleep",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "duration": "10"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 600
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "duration",
+                                        "type": "uinteger",
+                                        "label": "Delay",
+                                        "required": true,
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 12,
+                            "module": "monday:DeleteItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "id": "{{9.id}}",
+                                "isToArchiveItem": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 600
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 13,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1800,
+                                            "y": 600
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 14,
+                            "module": "monday:CreateItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "name": "test1",
+                                "boardId": "4095501824",
+                                "groupId": "",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "dropdown2",
+                                        "columnValue": {
+                                            "labels": [
+                                                "{{2.name}}"
+                                            ],
+                                            "settings": "{\"hide_footer\":false,\"labels\":[{\"id\":1,\"name\":\"New option\"}]}",
+                                            "selectType": "label2id"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 1200
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "✒️Execution: Subgrants | TEMPLATE  ::  public"
+                                        },
+                                        "groupId": {
+                                            "mode": "chose",
+                                            "label": "Empty"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Organization Name"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "labels": {
+                                                                "mode": "chose",
+                                                                "items": [
+                                                                    {
+                                                                        "value": {
+                                                                            "mode": "edit"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values to change"
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 15,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1200,
+                                            "y": 1500
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": 16,
+                            "module": "util:FunctionSleep",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "duration": "10"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 1200
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "duration",
+                                        "type": "uinteger",
+                                        "label": "Delay",
+                                        "required": true,
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 17,
+                            "module": "monday:DeleteItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "id": "{{14.id}}",
+                                "isToArchiveItem": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 1200
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 18,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1800,
+                                            "y": 1200
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 19,
+                            "module": "monday:CreateItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "name": "test1",
+                                "boardId": "4124701934",
+                                "groupId": "",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "dropdown7",
+                                        "columnValue": {
+                                            "labels": [
+                                                "{{2.name}}"
+                                            ],
+                                            "settings": "{\"hide_footer\":false,\"labels\":[{\"id\":1,\"name\":\"New option\"}]}",
+                                            "selectType": "label2id"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 864,
+                                    "y": 1817
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "4. Reporting | TEMPLATE  ::  public"
+                                        },
+                                        "groupId": {
+                                            "mode": "chose",
+                                            "label": "Empty"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Organization Name"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "labels": {
+                                                                "mode": "chose",
+                                                                "items": [
+                                                                    {
+                                                                        "value": {
+                                                                            "mode": "edit"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values to change"
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 20,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1200,
+                                            "y": 2100
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": 21,
+                            "module": "util:FunctionSleep",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "duration": "10"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 1800
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "duration",
+                                        "type": "uinteger",
+                                        "label": "Delay",
+                                        "required": true,
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 22,
+                            "module": "monday:DeleteItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "id": "{{19.id}}",
+                                "isToArchiveItem": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 1800
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 23,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1800,
+                                            "y": 1800
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 24,
+                            "module": "monday:CreateItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "name": "test1",
+                                "boardId": "3999239871",
+                                "groupId": "",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "dropdown2",
+                                        "columnValue": {
+                                            "labels": [
+                                                "{{2.name}}"
+                                            ],
+                                            "settings": "{\"hide_footer\":false,\"labels\":[{\"id\":1,\"name\":\"New option\"}]}",
+                                            "selectType": "label2id"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 745,
+                                    "y": 2143
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "6. TA Request | TEMPLATE  ::  public"
+                                        },
+                                        "groupId": {
+                                            "mode": "chose",
+                                            "label": "Empty"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Organization Name"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "labels": {
+                                                                "mode": "chose",
+                                                                "items": [
+                                                                    {
+                                                                        "value": {
+                                                                            "mode": "edit"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values to change"
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 25,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1200,
+                                            "y": 2700
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": 26,
+                            "module": "util:FunctionSleep",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "duration": "10"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1200,
+                                    "y": 2400
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "duration",
+                                        "type": "uinteger",
+                                        "label": "Delay",
+                                        "required": true,
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 27,
+                            "module": "monday:DeleteItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "id": "{{24.id}}",
+                                "isToArchiveItem": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 2400
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 28,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1800,
+                                            "y": 2400
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 35,
+                            "module": "monday:CreateItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "name": "test1",
+                                "boardId": "4157961053",
+                                "groupId": "",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "affiliate",
+                                        "columnValue": {
+                                            "labels": [
+                                                "{{2.name}}"
+                                            ],
+                                            "settings": "{\"hide_footer\":false,\"labels\":[{\"id\":0,\"name\":\"Latino Network\"},{\"id\":1,\"name\":\"Social Justice Collaborative\"},{\"id\":2,\"name\":\"La Clínica del Pueblo\"},{\"id\":3,\"name\":\"Voces\"},{\"id\":4,\"name\":\"Carlos Rosario International Public Charter School\"},{\"id\":5,\"name\":\"Hispanic Center Lehigh Valley\"},{\"id\":6,\"name\":\"Make the Road New York\"},{\"id\":7,\"name\":\"Hispanic Family Center of Southern New Jersey, Inc.\"},{\"id\":8,\"name\":\"Vera Court Neighborhood Center (VCNC)\"},{\"id\":9,\"name\":\"Enterprising Latinas\"},{\"id\":10,\"name\":\"MANA de San Diego\"},{\"id\":11,\"name\":\"El Centro del Pueblo\"},{\"id\":12,\"name\":\"Southwestern Regional Housing and Community Development Corporation\"},{\"id\":13,\"name\":\"Education Based Latino Outreach (EBLO)\"},{\"id\":14,\"name\":\"Erie Neighborhood House\"},{\"id\":15,\"name\":\"Alivio Medical Center\"},{\"id\":16,\"name\":\"Ventura County Community Development Corporation (VCCDC)\"},{\"id\":17,\"name\":\"Community HousingWorks\"},{\"id\":18,\"name\":\"Latino Community Foundation of Colorado\"},{\"id\":19,\"name\":\"Los Angeles Leadership Academy\"},{\"id\":20,\"name\":\"Clinica Msr. Oscar A Romero\"},{\"id\":21,\"name\":\"Campesinos Sin Fronteras\"},{\"id\":22,\"name\":\"Mississippi Immigrants Rights Alliance (MIRA)\"},{\"id\":23,\"name\":\"Salem/Keizer Coalition for Equality\"},{\"id\":24,\"name\":\"Haven Services, Inc.\"},{\"id\":25,\"name\":\"Centro Campesino Farmworker Center, Inc. (CCFC)\"},{\"id\":26,\"name\":\"Latino Leadership, Inc.\"},{\"id\":27,\"name\":\"El Sol Science and Arts Academy of Santa Ana\"},{\"id\":28,\"name\":\"La Casa de Esperanza, Inc.\"},{\"id\":29,\"name\":\"Friendly House, Inc.\"},{\"id\":30,\"name\":\"Hispanic Brotherhood, Inc.\"},{\"id\":31,\"name\":\"La Maestra Foundation, Inc\"},{\"id\":32,\"name\":\"Latin American Youth Center (LAYC)\"},{\"id\":33,\"name\":\"PODER\"},{\"id\":34,\"name\":\"Hispanic American Organization\"},{\"id\":35,\"name\":\"Mary's Center\"},{\"id\":36,\"name\":\"Promesa Public Schools, Inc.\"},{\"id\":37,\"name\":\"The Health Collaborative\"},{\"id\":38,\"name\":\"Cypress Hills Local Development Corporation\"},{\"id\":39,\"name\":\"Dominican Women's Development Center\"},{\"id\":40,\"name\":\"La Paz Chattanooga\"},{\"id\":41,\"name\":\"Building Skills Partnership\"},{\"id\":42,\"name\":\"Latino Economic Development Corporation (LEDC)\"},{\"id\":43,\"name\":\"Centro de la Familia de Utah\"},{\"id\":44,\"name\":\"Tejano Center for Community Concerns\"},{\"id\":45,\"name\":\"La Maestra Community Health Centers\"},{\"id\":46,\"name\":\"UnidosNow\"},{\"id\":47,\"name\":\"Voz Workers' Rights Education Project\"},{\"id\":48,\"name\":\"Mi Casa Resource Center\"},{\"id\":49,\"name\":\"Neighborhood Housing Services of Queens CDC, Inc.\"},{\"id\":50,\"name\":\"The Wall Las Memorias\"},{\"id\":51,\"name\":\"El Hogar del Niño\"},{\"id\":52,\"name\":\"Del Norte Neighborhood Development Corporation\"},{\"id\":53,\"name\":\"Proyecto Vida Digna\"},{\"id\":54,\"name\":\"Gads Hill Center\"},{\"id\":55,\"name\":\"Latin American Montessori Bilingual (LAMB) Public Charter School\"},{\"id\":56,\"name\":\"East Coast Migrant Head Start Project\"},{\"id\":57,\"name\":\"Corporación de Desarrollo Económico, Vivienda y Salud (CODEVyS)\"},{\"id\":58,\"name\":\"Latino Community Center (LCC)\"},{\"id\":59,\"name\":\"King-Chavez Neighborhood of Schools\"},{\"id\":60,\"name\":\"Comunidades Latinas Unidas en Servicio (CLUES)\"},{\"id\":61,\"name\":\"LCH Health and Community Services\"},{\"id\":62,\"name\":\"CentroNía\"},{\"id\":63,\"name\":\"CASA\"},{\"id\":64,\"name\":\"The Latino Alzheimer's and Memory Disorders Alliance (LAMDA)\"},{\"id\":65,\"name\":\"Su Clínica Familiar\"},{\"id\":66,\"name\":\"Latino U College Access, Inc. (LUCA)\"},{\"id\":67,\"name\":\"Asociación Puertorriqueños en Marcha, Inc. (APM)\"},{\"id\":68,\"name\":\"One Stop Career Center of Puerto Rico\"},{\"id\":69,\"name\":\"Mission Economic Development Agency (MEDA)\"},{\"id\":70,\"name\":\"Acero Schools\"},{\"id\":71,\"name\":\"Dominico-American Society of Queens\"},{\"id\":72,\"name\":\"East Boston Ecumenical Community Council (EBECC)\"},{\"id\":73,\"name\":\"Spanish Coalition for Housing\"},{\"id\":74,\"name\":\"La Raza Community Resource Center\"},{\"id\":75,\"name\":\"Hyde Square Task Force\"},{\"id\":76,\"name\":\"Spanish Speaking Citizens' Foundation\"},{\"id\":77,\"name\":\"Redlands Christian Migrant Association\"},{\"id\":78,\"name\":\"Metro West Community Development Organization\"},{\"id\":79,\"name\":\"West Kendall Baptist Hospital\"},{\"id\":80,\"name\":\"Greater Lawrence Community Action Council, Inc.\"},{\"id\":81,\"name\":\"KIPP SoCal Public Schools\"},{\"id\":82,\"name\":\"Casa Familiar, Inc.\"},{\"id\":83,\"name\":\"Guadalupe Centers, Inc.\"},{\"id\":84,\"name\":\"Center for Employment Training\"},{\"id\":85,\"name\":\"Brighton Park Neighborhood Council\"},{\"id\":86,\"name\":\"Hispanic Health Initiatives, Inc.\"},{\"id\":87,\"name\":\"El Centro Hispano\"},{\"id\":88,\"name\":\"American YouthWorks\"},{\"id\":89,\"name\":\"Hispanic Alliance for Career Enhancement (HACE)\"},{\"id\":90,\"name\":\"Concilio (PA)\"},{\"id\":91,\"name\":\"Houston Gateway Academy, Inc\"},{\"id\":92,\"name\":\"Centro de Salud Familiar La Fe, Inc.\"},{\"id\":93,\"name\":\"Esperanza Academy Charter School (Nueva Esperanza Academy)\"},{\"id\":94,\"name\":\"Mexicayotl Academy\"},{\"id\":95,\"name\":\"Northeast Ohio Hispanic Center for Economic Development\"},{\"id\":96,\"name\":\"Spanish American Civic Association (SACA)\"},{\"id\":97,\"name\":\"Hispanic Center of Western Michigan\"},{\"id\":98,\"name\":\"San Ysidro Health\"},{\"id\":99,\"name\":\"Visionary Home Builders of California, Inc.\"},{\"id\":100,\"name\":\"SEA MAR Community Health Centers\"},{\"id\":101,\"name\":\"El Programa Hispano Catolico\"},{\"id\":102,\"name\":\"La Fuerza Unida, Inc.\"},{\"id\":103,\"name\":\"Centro Hispano of Dane County\"},{\"id\":104,\"name\":\"Tiburcio Vasquez Health Center, Inc.\"},{\"id\":105,\"name\":\"I-LEAD Charter School\"},{\"id\":106,\"name\":\"Latino Community Credit Union\"},{\"id\":107,\"name\":\"CPLC New Mexico\"},{\"id\":108,\"name\":\"Community Action Board of Santa Cruz County, Inc.\"},{\"id\":109,\"name\":\"Sacred Heart Center (SHC)\"},{\"id\":110,\"name\":\"Familias en Acción\"},{\"id\":111,\"name\":\"Hispanic Unity of Florida, Inc.\"},{\"id\":112,\"name\":\"Pathstone Corporation\"},{\"id\":113,\"name\":\"La Causa, Inc.\"},{\"id\":114,\"name\":\"Neighborhood Housing Services of Southern Nevada, Inc.\"},{\"id\":115,\"name\":\"HOLA Ohio\"},{\"id\":116,\"name\":\"Mujeres Latinas En Acción\"},{\"id\":117,\"name\":\"Mountain Park Health Center\"},{\"id\":118,\"name\":\"Multicultural Career Intern Program\"},{\"id\":119,\"name\":\"Latino Policy Forum\"},{\"id\":120,\"name\":\"South Bay Community Services\"},{\"id\":121,\"name\":\"SER Jobs\"},{\"id\":122,\"name\":\"Clinic for Education, Treatment and Prevention of Addiction, Inc. (CETPA)\"},{\"id\":123,\"name\":\"Mission Asset Fund\"},{\"id\":124,\"name\":\"Lawrence CommunityWorks\"},{\"id\":125,\"name\":\"Hispanic Women's Organization of Arkansas\"},{\"id\":126,\"name\":\"Bienestar\"},{\"id\":127,\"name\":\"Academia Cesar Chavez\"},{\"id\":128,\"name\":\"Hispanic Services Council\"},{\"id\":129,\"name\":\"Congreso de Latinos Unidos, Inc.\"},{\"id\":130,\"name\":\"El Concilio California\"},{\"id\":131,\"name\":\"La Clínica de La Raza, Inc.\"},{\"id\":132,\"name\":\"Hispanic Dental Association\"},{\"id\":133,\"name\":\"New Economics for Women\"},{\"id\":134,\"name\":\"Adelante, The Latino Resource Center\"},{\"id\":135,\"name\":\"Community Services of Nevada (CSNV)\"},{\"id\":136,\"name\":\"National Parents Union\"},{\"id\":137,\"name\":\"YWCA El Paso del Norte Region\"},{\"id\":138,\"name\":\"Coalition of Florida Farmworker Organizations (COFFO)\"},{\"id\":139,\"name\":\"Esperanza (Nueva Esperanza)\"},{\"id\":140,\"name\":\"PUENTE Learning Center\"},{\"id\":141,\"name\":\"Con Mi MADRE\"},{\"id\":142,\"name\":\"Synergy Academies\"},{\"id\":143,\"name\":\"Association House of Chicago\"},{\"id\":144,\"name\":\"Camino Nuevo Charter Academy\"},{\"id\":145,\"name\":\"Project Vida Health Center\"},{\"id\":146,\"name\":\"Ohio Hispanic Coalition\"},{\"id\":147,\"name\":\"Amigos For Kids\"},{\"id\":148,\"name\":\"Arizona Hispanic Chamber of Commerce\"},{\"id\":149,\"name\":\"Canal Alliance\"},{\"id\":150,\"name\":\"Latin United Community Housing Association (LUCHA)\"},{\"id\":151,\"name\":\"Rural Community Development Resources\"},{\"id\":152,\"name\":\"Centro Hispano de East Tennessee\"},{\"id\":153,\"name\":\"Enlace Chicago\"},{\"id\":154,\"name\":\"Chicanos Por La Causa, Inc. (CPLC)\"},{\"id\":155,\"name\":\"Project Bravo, Inc.\"},{\"id\":156,\"name\":\"Dalton Whitfield Community Development Corporation\"},{\"id\":157,\"name\":\"Utah Coalition of La Raza\"},{\"id\":158,\"name\":\"Friends of Puerto Rico\"},{\"id\":159,\"name\":\"The Resurrection Project\"},{\"id\":160,\"name\":\"ConnectFamilias\"},{\"id\":161,\"name\":\"Ibero-American Action League, Inc.\"},{\"id\":162,\"name\":\"Hispanic Alliance\"},{\"id\":163,\"name\":\"Latino Community Development Agency\"},{\"id\":164,\"name\":\"Mariposa Dual Language Academy\"},{\"id\":165,\"name\":\"Spanish American Committee\"},{\"id\":166,\"name\":\"Midland Community Development Corporation\"},{\"id\":167,\"name\":\"Global Empowerment Development Corporation, Inc.\"},{\"id\":168,\"name\":\"Chicano Federation of San Diego County, Inc.\"},{\"id\":169,\"name\":\"Partnerships to Uplift Communities, Inc.\"},{\"id\":170,\"name\":\"Caridad Center, Inc.\"},{\"id\":171,\"name\":\"Salvadoran American Leadership and Educational Fund (SALEF)\"},{\"id\":172,\"name\":\"Center for Latino Progress (CPRF)\"},{\"id\":173,\"name\":\"Cesar Chavez Foundation\"},{\"id\":174,\"name\":\"Amber Charter School\"},{\"id\":175,\"name\":\"Gulf Coast Council of La Raza, Inc.\"},{\"id\":176,\"name\":\"AltaMed Health Services Corporation\"},{\"id\":177,\"name\":\"Watts Century Latino Organization\"},{\"id\":178,\"name\":\"Proyecto Inmigrante ICS, Inc.\"},{\"id\":179,\"name\":\"Centro Romero\"},{\"id\":180,\"name\":\"Santa Fe South Schools, Inc\"},{\"id\":181,\"name\":\"Montebello Housing Development Corporation\"},{\"id\":182,\"name\":\"Colorado Latino Leadership, Advocacy \\u0026 Research Organization (CLLARO)\"},{\"id\":183,\"name\":\"Mexican American Opportunity Foundation (MAOF)\"},{\"id\":184,\"name\":\"Northwest Side CDC\"},{\"id\":185,\"name\":\"Mattie Rhodes Center\"},{\"id\":186,\"name\":\"Adelante Mujeres\"},{\"id\":187,\"name\":\"Chica Project\"},{\"id\":188,\"name\":\"El Centro Hispano, Inc.\"},{\"id\":189,\"name\":\"AVANCE, Inc.\"},{\"id\":190,\"name\":\"Mexican American Unity Council (MAUC)\"},{\"id\":191,\"name\":\"SouthWest Improvement Council\"},{\"id\":192,\"name\":\"Hispanic Women's Corporation\"},{\"id\":193,\"name\":\"California Association for Bilingual Education (CABE)\"},{\"id\":194,\"name\":\"Puentes New Orleans, Inc.\"},{\"id\":195,\"name\":\"Semillas Sociedad Civil\"},{\"id\":196,\"name\":\"AAMA, Inc\"}]}",
+                                            "selectType": "label2id"
+                                        }
+                                    }
+                                ],
+                                "create_labels_if_missing": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 434,
+                                    "y": 2429
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "6. Payment | TEMPLATE  ::  public"
+                                        },
+                                        "groupId": {
+                                            "mode": "chose",
+                                            "label": "Empty"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Organization Name"
+                                                    },
+                                                    "columnValue": {
+                                                        "nested": {
+                                                            "labels": {
+                                                                "mode": "chose",
+                                                                "items": [
+                                                                    {
+                                                                        "value": {
+                                                                            "mode": "edit"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "selectType": {
+                                                                "mode": "chose",
+                                                                "label": "Label"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values to change"
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 39,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "parameters": {},
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 379,
+                                            "y": 2927
+                                        },
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": 36,
+                            "module": "util:FunctionSleep",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "duration": "10"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 661,
+                                    "y": 2667
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "duration",
+                                        "type": "uinteger",
+                                        "label": "Delay",
+                                        "required": true,
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 37,
+                            "module": "monday:DeleteItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 784295
+                            },
+                            "mapper": {
+                                "id": "{{35.id}}",
+                                "isToArchiveItem": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 948,
+                                    "y": 2893
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "Monday Unidos admin Connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "id",
+                                        "type": "uinteger",
+                                        "label": "ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "isToArchiveItem",
+                                        "type": "boolean",
+                                        "label": "Is to Just Archive",
+                                        "required": true
+                                    }
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 38,
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 1319,
+                                            "y": 2921
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": true,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}

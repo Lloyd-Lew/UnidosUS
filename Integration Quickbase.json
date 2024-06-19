@@ -1,0 +1,1081 @@
+{
+    "name": "Integration Quickbase",
+    "flow": [
+        {
+            "id": 15,
+            "module": "quickbase:getTable",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 1062586
+            },
+            "mapper": {
+                "appId": "br5d8nanj",
+                "tableId": "br5d8ir5w"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 102,
+                    "y": -60
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "quickbase"
+                            },
+                            "label": "Quickbase affiliateinfo via data_intake user"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:quickbase",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "appId",
+                        "type": "text",
+                        "label": "App ID",
+                        "required": true
+                    },
+                    {
+                        "name": "tableId",
+                        "type": "text",
+                        "label": "Table ID",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 18,
+            "module": "quickbase:makeApiCall",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 1062586
+            },
+            "mapper": {
+                "url": "records/query",
+                "body": "{\"from\": \"br5d8ir5w\",\"select\": [ 6, 7, 14, 15, 16, 69, 70, 86, 334, 335, 336, 378, 380, 383, 384, 407, 408, 409, 410, 411, 420],\"where\": null,\"sortBy\": [{\"fieldId\": 6,\"order\": \"ASC\"}],\"groupBy\": []}",
+                "method": "POST",
+                "headers": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "data",
+                        "value": "{\"from\": \"br5d8ir5w\",\"select\": [ 6, 7, 14, 15, 16, 69, 70, 86, 334, 335, 336, 378, 380, 383, 384, 407, 408, 409, 410, 411, 420],\"where\": null,\"sortBy\": [{\"fieldId\": 6,\"order\": \"ASC\"}],\"groupBy\": [null]}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 668,
+                    "y": -60
+                },
+                "restore": {
+                    "expect": {
+                        "qs": {
+                            "mode": "chose"
+                        },
+                        "method": {
+                            "mode": "chose",
+                            "label": "POST"
+                        },
+                        "headers": {
+                            "mode": "chose",
+                            "items": [
+                                null,
+                                null
+                            ]
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "quickbase"
+                            },
+                            "label": "Quickbase affiliateinfo via data_intake user"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:quickbase",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "text",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "GET",
+                                "POST",
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "qs",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Query String"
+                    },
+                    {
+                        "name": "body",
+                        "type": "any",
+                        "label": "Body"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "module": "builtin:BasicFeeder",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "array": "{{18.body.data}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1145,
+                    "y": -56
+                },
+                "restore": {
+                    "expect": {
+                        "array": {
+                            "mode": "edit"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "mode": "edit",
+                        "name": "array",
+                        "spec": [],
+                        "type": "array",
+                        "label": "Array"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 9,
+            "module": "monday:ListItemsByColumnValues",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 1104107
+            },
+            "filter": {
+                "name": "Check for complete data",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{6.`7`.value}}",
+                            "o": "exist"
+                        },
+                        {
+                            "a": "{{6.`6`.value}}",
+                            "o": "exist"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "limit": "10",
+                "boardId": "4526410763",
+                "columnId": "id__ae_",
+                "startPage": "",
+                "columnValue": "{{6.`7`.value}}",
+                "showParentID": false,
+                "showSubitemsID": false,
+                "filterToGetColumnValues": []
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1704,
+                    "y": -60
+                },
+                "restore": {
+                    "expect": {
+                        "boardId": {
+                            "mode": "chose",
+                            "label": "Affiliates Organisation  ::  public"
+                        },
+                        "columnId": {
+                            "mode": "chose",
+                            "label": "ID (AE)"
+                        },
+                        "filterToGetColumnValues": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "monday"
+                            },
+                            "label": "My Monday v2 connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:monday",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit",
+                        "required": true
+                    },
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentID",
+                        "type": "boolean",
+                        "label": "Show Parent ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitemsID",
+                        "type": "boolean",
+                        "label": "Show Subitems ID",
+                        "required": true
+                    },
+                    {
+                        "name": "startPage",
+                        "type": "uinteger",
+                        "label": "Start Page"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit",
+                        "required": true
+                    },
+                    {
+                        "name": "boardId",
+                        "type": "select",
+                        "label": "Board ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showParentID",
+                        "type": "boolean",
+                        "label": "Show Parent ID",
+                        "required": true
+                    },
+                    {
+                        "name": "showSubitemsID",
+                        "type": "boolean",
+                        "label": "Show Subitems ID",
+                        "required": true
+                    },
+                    {
+                        "name": "startPage",
+                        "type": "uinteger",
+                        "label": "Start Page"
+                    },
+                    {
+                        "name": "columnId",
+                        "type": "select",
+                        "label": "Column ID to Search the Value",
+                        "required": true
+                    },
+                    {
+                        "name": "filterToGetColumnValues",
+                        "spec": {
+                            "name": "value",
+                            "type": "select",
+                            "label": "Column ID",
+                            "dynamic": true,
+                            "options": [],
+                            "required": true
+                        },
+                        "type": "array",
+                        "label": "Output Column Values"
+                    },
+                    {
+                        "name": "columnValue",
+                        "type": "text",
+                        "label": "Column Value",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "__IMTLENGTH__",
+                        "type": "uinteger",
+                        "label": "Total number of bundles"
+                    },
+                    {
+                        "name": "__IMTINDEX__",
+                        "type": "uinteger",
+                        "label": "Bundle order position"
+                    },
+                    {
+                        "name": "id",
+                        "type": "uinteger",
+                        "label": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "created_at",
+                        "type": "date",
+                        "label": "Created at"
+                    },
+                    {
+                        "name": "updated_at",
+                        "type": "date",
+                        "label": "Updated at"
+                    },
+                    {
+                        "name": "board",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "uinteger",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Board"
+                    },
+                    {
+                        "name": "creator_id",
+                        "type": "uinteger",
+                        "label": "Creator ID"
+                    },
+                    {
+                        "name": "group",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Group"
+                    },
+                    {
+                        "name": "column_values",
+                        "spec": [
+                            {
+                                "name": "id",
+                                "type": "text",
+                                "label": "ID"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            },
+                            {
+                                "name": "additional_info",
+                                "type": "text",
+                                "label": "Additional Info"
+                            },
+                            {
+                                "name": "text",
+                                "type": "text",
+                                "label": "Text"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Column Values"
+                    },
+                    {
+                        "name": "mappable_column_values",
+                        "spec": [
+                            {
+                                "name": "long_text",
+                                "spec": [
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Aditional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "discription project"
+                            },
+                            {
+                                "name": "person",
+                                "spec": [
+                                    {
+                                        "name": "personsAndTeams",
+                                        "spec": [
+                                            {
+                                                "name": "id",
+                                                "type": "uinteger",
+                                                "label": "ID"
+                                            },
+                                            {
+                                                "name": "kind",
+                                                "type": "text",
+                                                "label": "Kind"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Persons and Teams"
+                                    },
+                                    {
+                                        "name": "changed_at",
+                                        "type": "date",
+                                        "label": "Changed at"
+                                    },
+                                    {
+                                        "name": "additonal_info",
+                                        "spec": [
+                                            {
+                                                "name": "label",
+                                                "type": "text",
+                                                "label": "Label"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Aditional info"
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Value"
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "type": "collection",
+                                "label": "Person"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Mappable column values"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 10,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 2370,
+                    "y": -59
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 11,
+                            "module": "monday:ChangeMultipleColumnValues",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 1104107
+                            },
+                            "filter": {
+                                "name": "Found - Update",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{9.id}}",
+                                            "o": "exist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "itemId": "{{9.id}}",
+                                "boardId": "4526410763",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "name",
+                                        "columnValue": "{{6.`6`.value}}"
+                                    },
+                                    {
+                                        "columnId": "state",
+                                        "columnValue": "{{6.`384`.value}}"
+                                    },
+                                    {
+                                        "columnId": "city",
+                                        "columnValue": "{{6.`383`.value}}"
+                                    },
+                                    {
+                                        "columnId": "staff____full_time",
+                                        "columnValue": "{{6.`69`.value}}"
+                                    },
+                                    {
+                                        "columnId": "legal_name__dba_",
+                                        "columnValue": "{{6.`6`.value}}"
+                                    },
+                                    {
+                                        "columnId": "uus_region",
+                                        "columnValue": "{{6.`16`.value}}"
+                                    },
+                                    {
+                                        "columnId": "area_rural",
+                                        "columnValue": "{{6.`335`.value}}"
+                                    },
+                                    {
+                                        "columnId": "area_suburban",
+                                        "columnValue": "{{6.`336`.value}}"
+                                    },
+                                    {
+                                        "columnId": "area_urban",
+                                        "columnValue": "{{6.`334`.value}}"
+                                    },
+                                    {
+                                        "columnId": "text4",
+                                        "columnValue": "{{6.`378`.value}}"
+                                    },
+                                    {
+                                        "columnId": "numbers",
+                                        "columnValue": "{{6.`86`.value}}"
+                                    },
+                                    {
+                                        "columnId": "text",
+                                        "columnValue": "{{6.`15`.value}}"
+                                    },
+                                    {
+                                        "columnId": "text3",
+                                        "columnValue": "{{6.`380`.value}}"
+                                    },
+                                    {
+                                        "columnId": "numbers3",
+                                        "columnValue": "{{if(6.`70`.value = \"Unknown\"; 0; 6.`70`.value)}}"
+                                    },
+                                    {
+                                        "columnId": "main_phone__",
+                                        "columnValue": "{{6.`14`.value}}"
+                                    }
+                                ],
+                                "create_labels_if_missing": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2860,
+                                    "y": -385
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "itemId": {
+                                            "mode": "edit"
+                                        },
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Affiliates Organisation  ::  public"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "itemId",
+                                        "type": "select",
+                                        "label": "Item ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Column Values to Change",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 12,
+                            "module": "monday:CreateItem",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 1104107
+                            },
+                            "filter": {
+                                "name": "Not found - Create",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{9.id}}",
+                                            "o": "notexist"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "name": "{{6.`6`.value}}",
+                                "boardId": "4526410763",
+                                "groupId": "topics",
+                                "columnValuesToChange": [
+                                    {
+                                        "columnId": "id__ae_",
+                                        "columnValue": "{{6.`7`.value}}"
+                                    },
+                                    {
+                                        "columnId": "legal_name__dba_",
+                                        "columnValue": "{{6.`6`.value}}"
+                                    },
+                                    {
+                                        "columnId": "city",
+                                        "columnValue": "{{6.`383`.value}}"
+                                    },
+                                    {
+                                        "columnId": "state",
+                                        "columnValue": "{{6.`384`.value}}"
+                                    },
+                                    {
+                                        "columnId": "staff____full_time",
+                                        "columnValue": "{{6.`69`.value}}"
+                                    },
+                                    {
+                                        "columnId": "uus_region",
+                                        "columnValue": "{{6.`16`.value}}"
+                                    },
+                                    {
+                                        "columnId": "area_rural",
+                                        "columnValue": "{{6.`335`.value}}"
+                                    },
+                                    {
+                                        "columnId": "area_suburban",
+                                        "columnValue": "{{6.`336`.value}}"
+                                    },
+                                    {
+                                        "columnId": "area_urban",
+                                        "columnValue": "{{6.`334`.value}}"
+                                    },
+                                    {
+                                        "columnId": "numbers",
+                                        "columnValue": "{{6.`86`.value}}"
+                                    },
+                                    {
+                                        "columnId": "text3",
+                                        "columnValue": "{{6.`380`.value}}"
+                                    },
+                                    {
+                                        "columnId": "text4",
+                                        "columnValue": "{{6.`378`.value}}"
+                                    },
+                                    {
+                                        "columnId": "main_phone__",
+                                        "columnValue": "{{6.`14`.value}}"
+                                    },
+                                    {
+                                        "columnId": "text",
+                                        "columnValue": "{{6.`15`.value}}"
+                                    },
+                                    {
+                                        "columnId": "numbers3",
+                                        "columnValue": "{{if(6.`70`.value = \"Unknown\"; 0; 6.`70`.value)}}"
+                                    }
+                                ],
+                                "create_labels_if_missing": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2900,
+                                    "y": 129
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "boardId": {
+                                            "mode": "chose",
+                                            "label": "Affiliates Organisation  ::  public"
+                                        },
+                                        "groupId": {
+                                            "mode": "chose",
+                                            "label": "Current Affiliates"
+                                        },
+                                        "columnValuesToChange": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "chose",
+                                                        "label": "Main Phone #"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                },
+                                                {
+                                                    "columnId": {
+                                                        "mode": "edit"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "monday"
+                                            },
+                                            "label": "My Monday v2 connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:monday",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Item Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "boardId",
+                                        "type": "select",
+                                        "label": "Board ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "create_labels_if_missing",
+                                        "type": "boolean",
+                                        "label": "Create Labels if Missing",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "groupId",
+                                        "type": "select",
+                                        "label": "Group ID"
+                                    },
+                                    {
+                                        "name": "columnValuesToChange",
+                                        "spec": [
+                                            {
+                                                "name": "columnId",
+                                                "type": "select",
+                                                "label": "Column ID",
+                                                "dynamic": true,
+                                                "options": {
+                                                    "store": []
+                                                },
+                                                "required": true,
+                                                "validate": false
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Array of column values to change"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": true,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us1.make.com"
+    }
+}
